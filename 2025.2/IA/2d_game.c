@@ -73,43 +73,58 @@ int main()
         printf("---------------------------------------------------------------------------------\n");
         
         if (vetorAtual == 4 && posicaoV == 3) {
-            printf("\nParabéns! Você alcançou o objetivo!\n");
+            printf("\nParabens! Voce alcançou o objetivo!\n");
             break;
         }
-        
         
         printf("Movimento: ");
         scanf(" %c", &movimento);
         
-        // if(vetorAtual < 0 || vetorAtual > 4)
-        // {
-        //     printf("Movimento invalido\n");
-        //     continue;
-        // }
-        // else
-        // {
-            switch(movimento)
-            {
-                case 'W':
-                case 'w':
-                    posicaoV--;
-                    break;
-                case 'A':
-                case 'a':
-                    vetorAtual--;
-                    break;
-                case 'S':
-                case 's':
+        switch(movimento)
+        {
+            case 'W':
+            case 'w':
+                posicaoV--;
+                if(posicaoV < 0)
+                {
                     posicaoV++;
-                    break;
-                case 'D':
-                case 'd':
+                    printf("Movimento inválido\n\n");
+                }
+                break;
+
+            case 'A':
+            case 'a':
+                vetorAtual--;
+                if(vetorAtual < 0)
+                {
                     vetorAtual++;
-                    break;
-                default:
-                    printf("\t\t\t- Erro: Faça um movimento possivel! -\n\n");
-            }
-        // }
+                    printf("Movimento inválido\n\n");
+                }
+                break;
+
+            case 'S':
+            case 's':
+                posicaoV++;
+                if(posicaoV > 4)
+                {
+                    posicaoV--;
+                    printf("Movimento inválido\n\n");
+                }
+                break;
+
+            case 'D':
+            case 'd':
+                vetorAtual++;
+                if(vetorAtual > 4)
+                    {
+                        vetorAtual--;
+                        printf("Movimento inválido\n\n");
+                    }
+                break;
+                
+            default:
+                printf("\t\t\t- Erro: Faça um movimento possivel! -\n\n");
+        }
     }
     return 0;
 }
