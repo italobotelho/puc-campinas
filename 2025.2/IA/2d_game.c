@@ -73,7 +73,7 @@ int main()
         printf("---------------------------------------------------------------------------------\n");
         
         if (vetorAtual == 4 && posicaoV == 3) {
-            printf("\nParabens! Voce alcançou o objetivo!\n");
+            printf("\nParabens! Voce alcancou o objetivo!\n");
             break;
         }
         
@@ -88,7 +88,7 @@ int main()
                 if(posicaoV < 0)
                 {
                     posicaoV++;
-                    printf("Movimento inválido\n\n");
+                    printf("Movimento invalido\n\n");
                 }
                 break;
 
@@ -98,7 +98,7 @@ int main()
                 if(vetorAtual < 0)
                 {
                     vetorAtual++;
-                    printf("Movimento inválido\n\n");
+                    printf("Movimento invalido\n\n");
                 }
                 break;
 
@@ -108,7 +108,7 @@ int main()
                 if(posicaoV > 4)
                 {
                     posicaoV--;
-                    printf("Movimento inválido\n\n");
+                    printf("Movimento invalido\n\n");
                 }
                 break;
 
@@ -118,12 +118,36 @@ int main()
                 if(vetorAtual > 4)
                     {
                         vetorAtual--;
-                        printf("Movimento inválido\n\n");
+                        printf("Movimento invalido\n\n");
                     }
                 break;
                 
             default:
-                printf("\t\t\t- Erro: Faça um movimento possivel! -\n\n");
+                printf("\t\t\t- Erro: Faca um movimento possivel! -\n\n");
+        }
+
+        if(((vetorAtual == 1) && (posicaoV == 4 || posicaoV == 2 || posicaoV == 1)) || ((vetorAtual == 3) && (posicaoV == 3 || posicaoV == 1 || posicaoV == 0)))
+        {
+            if(movimento == 'W' || movimento == 'w')
+            {
+                printf("Movimento invalido\n\n");
+                posicaoV++;
+            }
+            else if(movimento == 'S' || movimento == 's')
+            {
+                printf("Movimento invalido\n\n");
+                posicaoV--;
+            }
+            else if(movimento == 'A' || movimento == 'a')
+            {
+                printf("Movimento invalido\n\n");
+                vetorAtual++;
+            }
+            else if(movimento == 'D' || movimento == 'd')
+            {
+                printf("Movimento invalido\n\n");
+                vetorAtual--;
+            }
         }
     }
     return 0;
