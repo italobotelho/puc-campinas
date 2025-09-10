@@ -1,0 +1,16 @@
+Gerei um numero aleatorio de 5 algarismos. Tente adivinhar! 
+Digite o numero de tentativas para encontrar o número: 10 
+Digite um numero: 00000 
+Algarismos corretos: ___00 
+Digite um numero: 11200 
+Algarismos corretos: ___00 
+Digite um numero: 22300 
+Algarismos corretos: __300 
+Digite um numero: 33300 
+Algarismos corretos: 3_300 
+Digite um numero: 34300 
+Algarismos corretos: 3_300 
+Digite um numero: 35300 
+Algarismos corretos: 3_300 
+Digite um numero: 36300 
+Parabens, voce adivinhou o numero 36300!

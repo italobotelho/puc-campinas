@@ -1,0 +1,7 @@
+Gerei um numero aleatorio de 5 algarismos. Tente adivinhar!
+Digite o numero de tentativas para encontrar o numero: 2
+Digite um numero: 89312
+Algarismos corretos: 89_1_
+Digite um numero: 89017
+Algarismos corretos: 8901_
+Depois de 2 tentativas, voce nao encontrou o numero 89014!

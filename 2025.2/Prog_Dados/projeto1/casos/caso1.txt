@@ -1,0 +1,10 @@
+Gerei um numero aleatorio de 5 algarismos. Tente adivinhar!
+Digite o numero de tentativas para encontrar o numero: 5
+Digite um numero: 75000
+Algarismos corretos: 75___
+Digite um numero: 75123
+Algarismos corretos: 751__
+Digite um numero: 75135
+Algarismos corretos: 7513_
+Digite um numero: 75132
+Parabens, voce adivinhou o numero 75132!
