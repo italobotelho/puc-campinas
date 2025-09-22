@@ -7,12 +7,10 @@
 // Chame essa função para preencher um vetor numero de tamanho n com um número
 // aleatório entre 00000 e 99999
 void gera_numero(int numero[], int n) {
-  // srand(time(NULL));
+  srand(time(NULL));
 
   for (int i = 0; i < n; ++i)
     numero[i] = rand() % 10;
-
-  printf(" %d", numero);
 }
 
 // Chame essa função para percorrer o vetor numero e computar o número baseado nos
@@ -41,25 +39,23 @@ void imprime_acertados(int numero[], int acertados[], int n) {
 
 int main() {
   // ======== 1 e 2 - Inicialização e Configuração ========
-  int tentativas;
+  int numero[TAM], tentativas;
 
+  gera_numero(numero, TAM);
 
-  // printf("Gerei um número aleatório de %d algarismos. Tente adivinhar!\n", TAM);
-
-  // Pergunte ao usuário sobre a quantidade de tentativas a serem realizadas  
-  // scanf("Digite o número de tentativas para encontrar o número: %d", &tentativas);
+  printf("Gerei um numero aleatorio de %d algarismos. Tente adivinhar!\n", TAM); 
+  // Pergunte ao usuário sobre a quantidade de tentativasa serem realizadas
+  do
+  {
+    printf("Digite o numero de tentativas para encontrar o numero: ");
+    scanf(" %d", &tentativas);
+  } while (tentativas <= 0);
+  
 
   // ======== 3 - Loop do Jogo ========
   // Para um número de tentativas x, checa se o número lido está correto.
   // Para cada tentativa, caso não tenha acertado:
   //    imprime_acertados(...);
-
-  // for(int i = 0; i < tentativas; i++)
-  // {
-  //   printf("Digite um número: ");
-  //   scanf(" %d", &numero);
-
-  // }
 
   // ======== 4 - Finalização ========
   // Caso tenha encontrado o número, imprima:
