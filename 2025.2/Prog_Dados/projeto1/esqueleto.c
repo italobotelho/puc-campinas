@@ -39,9 +39,9 @@ void imprime_acertados(int numero[], int acertados[], int n) {
 
 int main() {
   // ======== 1 e 2 - Inicialização e Configuração ========
-  int numero[TAM], tentativas;
+  int vetor[TAM], vetor_acertados[TAM], tentativas, numero;
 
-  gera_numero(numero, TAM);
+  gera_numero(vetor, TAM);
 
   printf("Gerei um numero aleatorio de %d algarismos. Tente adivinhar!\n", TAM); 
   // Pergunte ao usuário sobre a quantidade de tentativasa serem realizadas
@@ -51,9 +51,25 @@ int main() {
     scanf(" %d", &tentativas);
   } while (tentativas <= 0);
   
-
   // ======== 3 - Loop do Jogo ========
   // Para um número de tentativas x, checa se o número lido está correto.
+  for(int i=0; i<tentativas; i++)
+  {
+    do
+    {
+      printf("\nDigite um numero: ");
+      scanf(" %d", &numero);
+
+    } while (numero );
+    
+    
+
+    
+    if(1)
+    {
+      imprime_acertados(vetor, vetor_acertados, TAM);
+    }
+  }
   // Para cada tentativa, caso não tenha acertado:
   //    imprime_acertados(...);
 
