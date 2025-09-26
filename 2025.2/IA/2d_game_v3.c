@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h> 
+
 #define tam 5
 
 void limpar_tela() 
 {
     printf("\033[2J\033[H");
+}
+
+void temporizador(int segundos) {
+    while (segundos > 0) {
+        fflush(stdout);
+        Sleep(1000); // Pausa por 1000 milissegundos (1 segundo)
+        segundos--;
+    }
 }
 
 void inicializa_labirinto(char labirinto[tam][tam])
@@ -26,11 +36,8 @@ void renderiza_labirinto(char labirinto[tam][tam], int linha_robo, int coluna_ro
 {
     char celula_anterior = labirinto[linha_robo][coluna_robo];
     labirinto[linha_robo][coluna_robo] = 'S';
-
-    int distancia = abs(linha_robo - 3) + abs(coluna_robo - 4);
     
-    printf("Movimente [S] para chegar em [G]\n\tMova usando WASD (Q para sair)\n\n");
-    printf("Distancia de Manhattan (ignora paredes): %d\n\n", distancia);
+    int distancia = abs(linha_robo - 3) + abs(coluna_robo - 4);
 
     for(int i=0; i<tam; i++)
     {
@@ -44,18 +51,37 @@ void renderiza_labirinto(char labirinto[tam][tam], int linha_robo, int coluna_ro
     labirinto[linha_robo][coluna_robo] = celula_anterior;
 }
 
-void mover_robo(char movimento, int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
+void mover_robo(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
 {
     int proxima_linha = *linha_ptr;
     int proxima_coluna = *coluna_ptr;
-
-    switch(movimento)
+    
+    int h_cima, h_baixo, h_esquerda, h_direita;
+ 
+    h_cima = (abs((proxima_linha - 1) - 3) + abs(proxima_coluna - 4)) + 1;
+    h_baixo = (abs((proxima_linha + 1) - 3) + abs(proxima_coluna - 4)) + 1;
+    h_direita = (abs(proxima_linha - 3) + abs((proxima_coluna + 1) - 4)) + 1;
+    h_esquerda = (abs(proxima_linha - 3) + abs((proxima_coluna - 1) - 4)) + 1;
+    
+    if(h_cima < h_baixo && h_cima < h_esquerda && h_cima < h_direita)
     {
-        case 'w': case 'W': proxima_linha--; break;
-        case 'a': case 'A': proxima_coluna--; break;
-        case 's': case 'S': proxima_linha++; break;
-        case 'd': case 'D': proxima_coluna++; break;
-        default: return;
+        proxima_linha--;
+    }
+    else if(h_esquerda < h_cima && h_esquerda < h_baixo && h_esquerda < h_direita)
+    {
+        proxima_coluna--;
+    }
+    else if(h_baixo < h_cima && h_baixo < h_direita && h_baixo < h_esquerda)
+    {
+        proxima_linha++;
+    }
+    else if(h_direita < h_cima && h_direita < h_baixo && h_direita < h_esquerda)
+    {
+        proxima_coluna++;
+    }
+    else if(h_direita == h_baixo)
+    {
+        proxima_linha++;
     }
 
     if (proxima_linha >= 0 && proxima_linha < tam && proxima_coluna >= 0 && proxima_coluna < tam)
@@ -70,7 +96,7 @@ void mover_robo(char movimento, int *linha_ptr, int *coluna_ptr, char labirinto[
 
 int main()
 {
-    char labirinto[tam][tam], movimento;
+    char labirinto[tam][tam];
     int linha = 0, coluna = 0;
 
     inicializa_labirinto(labirinto);
@@ -87,15 +113,9 @@ int main()
             break;
         }
 
-        printf("\nInsira o movimento: ");
-        scanf(" %c", &movimento);
-
-        if(movimento == 'Q' || movimento == 'q')
-        {
-            break;
-        }
+        mover_robo(&linha, &coluna, labirinto);
         
-        mover_robo(movimento, &linha, &coluna, labirinto);
+        temporizador(2);
     }
 
     printf("\n- - Execucao encerrada! - -");
