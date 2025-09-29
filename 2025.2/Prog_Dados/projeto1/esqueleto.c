@@ -71,20 +71,17 @@ int main() {
       {
         for(int j=TAM; j>0; j--)
         {
-          while(numero != 0)
+          if(numero == 0)
           {
-            digito = numero % 10;
-            numero /= 10; 
-      
-            vetor_numero[j] = digito;
-            printf(" %d", vetor_numero[j]);
+            break;
           }
+
+          digito = numero % 10;
+          numero /= 10; 
+    
+          vetor_numero[j] = digito;
         }
-
-        //dando erro
-        // printf(" %d ", vetor_numero[1]);
-        // printf(" %d", vetor_numero[5]);
-
+        
         // imprime_acertados(vetor, vetor_bool, TAM);
       }
 
