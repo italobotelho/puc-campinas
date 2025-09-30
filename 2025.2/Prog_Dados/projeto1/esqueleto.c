@@ -38,70 +38,69 @@ void imprime_acertados(int numero[], int acertados[], int n) {
 }
 
 int main() {
-    // ======== 1 e 2 - Inicialização e Configuração ========
-    int vetor[TAM], vetor_numero[TAM], vetor_bool[TAM];
-    int tentativas, numero, digito, aux;
+  // ======== 1 e 2 - Inicialização e Configuração ========
+  int vetor[TAM], vetor_numero[TAM], vetor_bool[TAM];
+  int tentativas, numero, digito, aux;
 
-    gera_numero(vetor, TAM);
+  gera_numero(vetor, TAM);
 
-    printf("Gerei um numero aleatorio de %d algarismos. Tente adivinhar!\n", TAM);
+  printf("Gerei um numero aleatorio de %d algarismos. Tente adivinhar!\n", TAM);
 
+  do
+  {
+    printf("Digite o numero de tentativas para encontrar o numero: ");
+    scanf(" %d", &tentativas);
+  } while (tentativas <= 0);
+
+  // ======== 3 - Loop do Jogo ========
+  for(int i = 0; i < tentativas; i++)
+  {
     do
     {
-      printf("Digite o numero de tentativas para encontrar o numero: ");
-      scanf(" %d", &tentativas);
-    } while (tentativas <= 0);
+      printf("Digite um numero: ");
+      scanf(" %d", &numero);
+    } while (numero < 0);
 
-    // ======== 3 - Loop do Jogo ========
-
-    for(int i = 0; i < tentativas; i++)
-    {
-      do
-      {
-        printf("Digite um numero: ");
-        scanf(" %d", &numero);
-      } while (numero < 0);
-
-      if(numero == devolve_numero(vetor, TAM))
-      {
-        break;
-      }
-      else
-      {
-        for (int a = 0; a < TAM; a++)
-        {
-          vetor_bool[a] = 0;
-          vetor_numero[a] = 0;
-        }
-
-        aux = numero;
-        for (int j = TAM - 1; j >= 0; j--)
-        {
-          vetor_numero[j] = aux % 10;
-          aux /= 10;
-        }
-
-        for (int k = 0; k < TAM; k++)
-        {
-          if (vetor[k] == vetor_numero[k])
-          {
-            vetor_bool[k] = 1;
-          }
-        }
-
-        imprime_acertados(vetor, vetor_bool, TAM);
-      }
-    }
-
-    // 4 - Finalização
     if(numero == devolve_numero(vetor, TAM))
     {
-        printf("Parabens, voce adivinhou o numero %05d!\n", devolve_numero(vetor, TAM));
+      break;
     }
     else
     {
-        printf("Depois de %d tentativas, voce nao encontrou o numero %05d!\n", tentativas, devolve_numero(vetor, TAM));
+      for (int a = 0; a < TAM; a++)
+      {
+        vetor_bool[a] = 0;
+        vetor_numero[a] = 0;
+      }
+
+      aux = numero;
+      for (int j = TAM - 1; j >= 0; j--)
+      {
+        vetor_numero[j] = aux % 10;
+        aux /= 10;
+      }
+
+      for (int k = 0; k < TAM; k++)
+      {
+        if (vetor[k] == vetor_numero[k])
+        {
+          vetor_bool[k] = 1;
+        }
+      }
+
+      imprime_acertados(vetor, vetor_bool, TAM);
     }
+  }
+
+  // 4 - Finalização
+  if(numero == devolve_numero(vetor, TAM))
+  {
+      printf("Parabens, voce adivinhou o numero %05d!\n", devolve_numero(vetor, TAM));
+  }
+  else
+  {
+      printf("Depois de %d tentativas, voce nao encontrou o numero %05d!\n", tentativas, devolve_numero(vetor, TAM));
+  }
 
   return 0;
 }
