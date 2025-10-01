@@ -74,17 +74,17 @@ int main() {
       }
 
       aux = numero;
-      for (int j = TAM - 1; j >= 0; j--)
+      for (int b = TAM - 1; b >= 0; b--)
       {
-        vetor_numero[j] = aux % 10;
+        vetor_numero[b] = aux % 10;
         aux /= 10;
       }
 
-      for (int k = 0; k < TAM; k++)
+      for (int c = 0; c < TAM; c++)
       {
-        if (vetor[k] == vetor_numero[k])
+        if (vetor[c] == vetor_numero[c])
         {
-          vetor_bool[k] = 1;
+          vetor_bool[c] = 1;
         }
       }
 
