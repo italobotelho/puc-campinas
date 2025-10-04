@@ -2,7 +2,7 @@
 
 int inicializa()
 {
-    return 10;
+    return 1;
 }
 
 int modifica(int estado)
@@ -10,20 +10,52 @@ int modifica(int estado)
     return --estado;
 }
 
-void selecionar(int h_vizinho, int h_atual, int *ptr_s, int *ptr_v)
+int max(int a, int b)
+{
+    if(a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+int min(int a, int b)
+{
+    if(a < b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+int avaliacao_a(int estado)
+{
+    return (estado * estado) + (3 * estado) - 10;
+}
+
+int avaliacao_b(int estado)
+{
+    return max(0, min(estado, 10) + 5 * estado);
+}
+
+void selecionar(int *ptr_s, int h_atual, int *ptr_v, int h_vizinho)
 {
     int s = *ptr_s;
     int v = *ptr_v;
     
-    if(h_vizinho < h_atual)
+    if (h_vizinho < h_atual)
     {
         s = v;
     }
-}
 
-int avaliacao(int estado)
-{
-    return (estado ^ 2) + (3 * estado) - 10;
+    *ptr_s = s;
+    *ptr_v = v;
 }
 
 int main()
@@ -32,12 +64,29 @@ int main()
     
     s = inicializa();
     
-    while(s != 0)
+    while(1)
     {
         v = modifica(s);
-        
-        selecionar(avaliacao(v), avaliacao(s));
+    
+        printf("Estado = %d, Avaliacao = %d | Vizinho = %d, Avaliacao = %d\n", s, avaliacao_b(s), v, avaliacao_b(v));   
+
+        selecionar(&s, avaliacao_b(s), &v, avaliacao_b(v));
+
+        if (s != v)
+        {
+            break;
+        }
     }
+
+    // printf("------------------------------------------------------------------\n");
+    // printf("   Estado promissor para 'f(x) = x^2 + 3 * x - 10'  ==>  [ %d ]\n", s);
+    // printf("------------------------------------------------------------------");
+
+    printf("----------------------------------------------------------------------------\n");
+    printf("     !!!  Busca Local (Hill Climbing) - Otimizacao por Minimizacao  !!!     \n");
+    printf("----------------------------------------------------------------------------\n");
+    printf("   Estado promissor para 'f(x) = MAX(0, MIN(x, 10) + 5 * x)'  ==>  [ %d ]   \n", s);
+    printf("----------------------------------------------------------------------------");
 
     return 0;
 }
