@@ -151,6 +151,7 @@ void mover_robo_guloso(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam]
     }
 }
 
+// Função apenas de impressão da tela inicial do 2d_game com as duas opçoes de jogo: manual e busca gulosa
 void tela_inicial()
 {
     system("cls");
@@ -162,6 +163,7 @@ void tela_inicial()
     printf("    2. Robo se movimenta sozinho (Busca Gulosa)\n\n");
 }
 
+// Função que exige INPUT do usuário (opcoes)
 int opcoes_user()
 {
     int a;
@@ -175,6 +177,7 @@ int opcoes_user()
     return a;
 }
 
+// Função main - principal
 int main()
 {
     srand(time(NULL)); // gera numero aleatorios
@@ -192,7 +195,7 @@ int main()
 
         while(1)
         {       
-            system("cls");
+            system("cls"); // limpa campos
 
             layout();
             heuristica(linha, coluna);
