@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define tam 5
+#include <windows.h>
 
-void limpar_tela() 
-{
-    printf("\033[2J\033[H");
-}
+#define tam 5
 
 void inicializa_labirinto(char labirinto[tam][tam])
 {
@@ -77,7 +74,7 @@ int main()
 
     while(1)
     {
-        limpar_tela();
+        system("cls");
         
         renderiza_labirinto(labirinto, linha, coluna);
 
