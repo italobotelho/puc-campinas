@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <windows.h> // chamada para usar o clear do terminal
+#include <time.h> // chamada para usar rand
 
-#define tam 5
+#define tam 5 // tamanho do grid do labirinto 5x5
 
 // Função que controla o tempo de impressão dos estados
 void temporizador(int segundos) {
@@ -13,6 +14,7 @@ void temporizador(int segundos) {
     }
 }
 
+// Função com um preset de layout definido
 void layout()
 {
     printf("-------------------------------------------------------\n");
@@ -55,6 +57,7 @@ void renderiza_labirinto(char labirinto[tam][tam], int linha_robo, int coluna_ro
     labirinto[linha_robo][coluna_robo] = celula_anterior;
 }
 
+// Função que calcula a heuristica através da Distancia de Manhattan
 void heuristica(int linha_robo, int coluna_robo)
 {
     int distancia = abs(linha_robo - 3) + abs(coluna_robo - 4);
@@ -65,44 +68,59 @@ void heuristica(int linha_robo, int coluna_robo)
 // Função que calcula a heuristica e altera a posicao atual do robô 'S'
 void mover_robo_guloso(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
 {
-    int proxima_linha = *linha_ptr;
-    int proxima_coluna = *coluna_ptr;
+    int proxima_linha[4], proxima_coluna[4], heuristicas[4], melhores_indices[4];
+    int count = 0;
+    int menor_heuristica = tam * 2;
 
-    int h_cima, h_baixo, h_esquerda, h_direita;
+    int linha = *linha_ptr;
+    int coluna = *coluna_ptr;
 
-    h_cima = (abs((proxima_linha - 1) - 3) + abs(proxima_coluna - 4)) + 1;
-    h_baixo = (abs((proxima_linha + 1) - 3) + abs(proxima_coluna - 4)) + 1;
-    h_direita = (abs(proxima_linha - 3) + abs((proxima_coluna + 1) - 4)) + 1;
-    h_esquerda = (abs(proxima_linha - 3) + abs((proxima_coluna - 1) - 4)) + 1;
+    // Cima
+    proxima_linha[0] = linha - 1;
+    proxima_coluna[0] = coluna;
+    heuristicas[0] = abs(proxima_linha[0] - 3) + abs(proxima_coluna[0] - 4);
 
-    if(h_cima < h_baixo && h_cima < h_esquerda && h_cima < h_direita)
-    {
-        proxima_linha--;
-    }
-    else if(h_esquerda < h_cima && h_esquerda < h_baixo && h_esquerda < h_direita)
-    {
-        proxima_coluna--;
-    }
-    else if(h_baixo < h_cima && h_baixo < h_direita && h_baixo < h_esquerda)
-    {
-        proxima_linha++;
-    }
-    else if(h_direita < h_cima && h_direita < h_baixo && h_direita < h_esquerda)
-    {
-        proxima_coluna++;
-    }
-    else if(h_direita == h_baixo)
-    {
-        proxima_linha++;
-    }
+    // Baixo
+    proxima_linha[1] = linha + 1;
+    proxima_coluna[1] = coluna;
+    heuristicas[1] = abs(proxima_linha[1] - 3) + abs(proxima_coluna[1] - 4);
 
-    if (proxima_linha >= 0 && proxima_linha < tam && proxima_coluna >= 0 && proxima_coluna < tam)
+    // Esquerda
+    proxima_linha[2] = linha;
+    proxima_coluna[2] = coluna - 1;
+    heuristicas[2] = abs(proxima_linha[2] - 3) + abs(proxima_coluna[2] - 4);
+
+    // Direita
+    proxima_linha[3] = linha;
+    proxima_coluna[3] = coluna + 1;
+    heuristicas[3] = abs(proxima_linha[3] - 3) + abs(proxima_coluna[3] - 4);
+
+    // Verifica movimentos válidos e encontra menor heurística
+    for (int i = 0; i < 4; i++)
     {
-        if (labirinto[proxima_linha][proxima_coluna] != '#')
+        // Primeira validação - Garante que o proximo movimento esteja dentro do labirinto e não permite que obstaculos sejam visualizados como caminhos a serem percorridos pelo robô
+        if (proxima_linha[i] >= 0 && proxima_linha[i] < tam && proxima_coluna[i] >= 0 && proxima_coluna[i] < tam && labirinto[proxima_linha[i]][proxima_coluna[i]] != '#')
         {
-            *linha_ptr = proxima_linha;
-            *coluna_ptr = proxima_coluna;
+            if (heuristicas[i] < menor_heuristica)
+            {
+                menor_heuristica = heuristicas[i];
+                count = 0;
+                melhores_indices[count++] = i;
+            }
+            else if (heuristicas[i] == menor_heuristica)
+            {
+                melhores_indices[count++] = i;
+            }
         }
+    }
+
+    // Escolhe aleatoriamente entre os melhores movimentos
+    if (count > 0)
+    {
+        int escolhido = melhores_indices[rand() % count];
+
+        *linha_ptr = proxima_linha[escolhido];
+        *coluna_ptr = proxima_coluna[escolhido];
     }
 }
 
@@ -111,6 +129,7 @@ void mover_robo_manual(char movimento, int *linha_ptr, int *coluna_ptr, char lab
     int proxima_linha = *linha_ptr;
     int proxima_coluna = *coluna_ptr;
 
+    // case que vai executar o movimento do robô 'S' de acordo com a escolha do user
     switch(movimento)
     {
         case 'w': case 'W': proxima_linha--; break;
@@ -120,6 +139,7 @@ void mover_robo_manual(char movimento, int *linha_ptr, int *coluna_ptr, char lab
         default: return;
     }
 
+    // verifica se a proxima celula é uma barreira '#' e se está dentro das limitações do labirinto 5x5
     if (proxima_linha >= 0 && proxima_linha < tam && proxima_coluna >= 0 && proxima_coluna < tam)
     {
         if (labirinto[proxima_linha][proxima_coluna] != '#')
@@ -132,6 +152,8 @@ void mover_robo_manual(char movimento, int *linha_ptr, int *coluna_ptr, char lab
 
 int main()
 {
+    srand(time(NULL)); // gera numero aleatorios
+
     char labirinto[tam][tam], movimento;
     int linha = 0, coluna = 0, modo_jogo, opcao;
 
