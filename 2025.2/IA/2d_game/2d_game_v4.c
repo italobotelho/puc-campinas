@@ -151,6 +151,30 @@ void mover_robo_guloso(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam]
     }
 }
 
+void tela_inicial()
+{
+    system("cls");
+
+    printf("--------------- Movimento em Labirinto! ---------------\n");
+    layout();
+    printf("              Selecione um modo de jogo:\n\n");
+    printf("    1. Controlar os movimentos do robo\n");
+    printf("    2. Robo se movimenta sozinho (Busca Gulosa)\n\n");
+}
+
+int opcoes_user()
+{
+    int a;
+
+    do
+    {
+        printf("Digite uma das opcoes (1 ou 2) => ");
+        scanf("%d", &a);
+    } while (a != 1 && a != 2);
+
+    return a;
+}
+
 int main()
 {
     srand(time(NULL)); // gera numero aleatorios
@@ -162,19 +186,9 @@ int main()
 
     do
     {
-        system("cls");
-
-        printf("--------------- Movimento em Labirinto! ---------------\n");
-        layout();
-        printf("              Selecione um modo de jogo:\n\n");
-        printf("    1. Controlar os movimentos do robo\n");
-        printf("    2. Robo se movimenta sozinho (Busca Gulosa)\n\n");
+        tela_inicial();
         
-        do
-        {
-            printf("Digite uma das opcoes => ");
-            scanf("%d", &modo_jogo);
-        } while (modo_jogo != 1 && modo_jogo != 2);
+        modo_jogo = opcoes_user();
 
         while(1)
         {       
@@ -227,11 +241,7 @@ int main()
         printf("                  1. Sim  |  2. Nao\n");
         layout();
 
-        do
-        {
-            printf("===> ");
-            scanf("%d", &opcao);
-        }while(opcao != 1 && opcao != 2);
+        opcao = opcoes_user();
         
         if(opcao == 2)
         {
