@@ -14,7 +14,7 @@ void temporizador(int segundos) {
     }
 }
 
-// Função com um preset de layout definido
+// Função com um preset de layout
 void layout()
 {
     printf("-------------------------------------------------------\n");
@@ -57,7 +57,7 @@ void renderiza_labirinto(char labirinto[tam][tam], int linha_robo, int coluna_ro
     labirinto[linha_robo][coluna_robo] = celula_anterior;
 }
 
-// Função que calcula a heuristica através da Distancia de Manhattan
+// Função que calcula a heuristica através do cálculo da Distancia de Manhattan
 void heuristica(int linha_robo, int coluna_robo)
 {
     int distancia = abs(linha_robo - 3) + abs(coluna_robo - 4);
@@ -65,7 +65,34 @@ void heuristica(int linha_robo, int coluna_robo)
     printf("       Distancia de Manhattan (ignora paredes): %d\n", distancia);
 }
 
-// Função que calcula a heuristica e altera a posicao atual do robô 'S'
+// Função que altera a posicao atual do robô 'S' aplicando a decisão do usuario
+void mover_robo_manual(char movimento, int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
+{
+    int proxima_linha = *linha_ptr;
+    int proxima_coluna = *coluna_ptr;
+
+    // case que vai executar o movimento do robô 'S' de acordo com a escolha do user
+    switch(movimento)
+    {
+        case 'w': case 'W': proxima_linha--; break;
+        case 'a': case 'A': proxima_coluna--; break;
+        case 's': case 'S': proxima_linha++; break;
+        case 'd': case 'D': proxima_coluna++; break;
+        default: return;
+    }
+
+    // verifica se a proxima celula é uma barreira '#' e se está dentro das limitações do labirinto 5x5
+    if (proxima_linha >= 0 && proxima_linha < tam && proxima_coluna >= 0 && proxima_coluna < tam)
+    {
+        if (labirinto[proxima_linha][proxima_coluna] != '#')
+        {
+            *linha_ptr = proxima_linha;
+            *coluna_ptr = proxima_coluna;
+        }
+    }
+}
+
+// Função que calcula a heuristica do proximo movimento possivel e altera a posicao atual do robô 'S' aplicando a busca gulosa
 void mover_robo_guloso(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
 {
     int proxima_linha[4], proxima_coluna[4], heuristicas[4], melhores_indices[4];
@@ -121,32 +148,6 @@ void mover_robo_guloso(int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam]
 
         *linha_ptr = proxima_linha[escolhido];
         *coluna_ptr = proxima_coluna[escolhido];
-    }
-}
-
-void mover_robo_manual(char movimento, int *linha_ptr, int *coluna_ptr, char labirinto[tam][tam])
-{
-    int proxima_linha = *linha_ptr;
-    int proxima_coluna = *coluna_ptr;
-
-    // case que vai executar o movimento do robô 'S' de acordo com a escolha do user
-    switch(movimento)
-    {
-        case 'w': case 'W': proxima_linha--; break;
-        case 'a': case 'A': proxima_coluna--; break;
-        case 's': case 'S': proxima_linha++; break;
-        case 'd': case 'D': proxima_coluna++; break;
-        default: return;
-    }
-
-    // verifica se a proxima celula é uma barreira '#' e se está dentro das limitações do labirinto 5x5
-    if (proxima_linha >= 0 && proxima_linha < tam && proxima_coluna >= 0 && proxima_coluna < tam)
-    {
-        if (labirinto[proxima_linha][proxima_coluna] != '#')
-        {
-            *linha_ptr = proxima_linha;
-            *coluna_ptr = proxima_coluna;
-        }
     }
 }
 
