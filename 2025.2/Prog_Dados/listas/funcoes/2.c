@@ -8,7 +8,7 @@ int horas_to_segundos(int h, int m, int s)
 
 int main()
 {
-    int hora, minuto, segundo, conversao_seg;
+    int hora, minuto, segundo;
 
     system("cls");
 
@@ -19,7 +19,7 @@ int main()
     printf("Insira os segundos: ");
     scanf("%d", &segundo);
 
-    printf("%d hora(s), %d minuto(s) e %d segundo(s) equivalem a %d segundo(s).", hora, minuto, segundo, conversao_seg = horas_to_segundos(hora, minuto, segundo));
+    printf("%d hora(s), %d minuto(s) e %d segundo(s) equivalem a %d segundo(s).", hora, minuto, segundo, horas_to_segundos(hora, minuto, segundo));
 
     return 0;
 }
