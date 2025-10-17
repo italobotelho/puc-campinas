@@ -48,29 +48,24 @@ int  evaluate(Individual *ind);
 int  cmp_desc_fitness(const void *a, const void *b);
 void copy_individual(const Individual *src, Individual *dst);
 int  tournament_select(Individual pop[], int pop_size);
-void one_point_crossover(const Individual *p1, const Individual *p2,
-                         Individual *c1, Individual *c2);
+void one_point_crossover(const Individual *p1, const Individual *p2, Individual *c1, Individual *c2);
 void mutate(Individual *ind);
 void print_board_ascii(const Individual *ind);
 
 /* -------------------- Implementacoes (STUBs) -------------------- */
-void random_individual(Individual *ind) {
-	// TODO: para cada i em [0..N-1], sorteie ind->gene[i] em [0, N-1].
-	// Inicie ind->fitness = 0 (sera definido em evaluate).
+void random_individual(Individual *ind)
+{
 	for(int i=0; i<N; i++)
 	{
 		ind->gene[i] = rand_int(0, N-1);
 	}
 
 	ind->fitness = 0;
-
 	(void)ind;
 }
 
-int compute_conflicts(const Individual *ind) {
-	/* TODO: contar pares (i<j) em conflito:
-	     - mesma coluna: ind->gene[i] == ind->gene[j]
-	     - mesma diagonal: abs(i-j) == abs(ind->gene[i] - ind->gene[j]) */
+int compute_conflicts(const Individual *ind)
+{
 	int cont = 0;
 
 	for(int i=0; i<N; i++)
@@ -84,42 +79,45 @@ int compute_conflicts(const Individual *ind) {
 		}
 	}
 
-(void)ind;
-
+	(void)ind;
 	return cont;
 }
 
-int evaluate(Individual *ind) {
-	/* TODO:
-	   total_pairs = N*(N-1)/2
-	   conflicts   = compute_conflicts(ind)
-	   ind->fitness = total_pairs - conflicts
-	   return ind->fitness; */
-
+int evaluate(Individual *ind)
+{
     int total_pairs = N*(N-1)/2;
     int conflicts = compute_conflicts(ind);
     ind->fitness = total_pairs - conflicts;
-    return ind->fitness;
-	   
+
 	(void)ind;
+	return ind->fitness;
 }
 
-int cmp_desc_fitness(const void *a, const void *b) {
+int cmp_desc_fitness(const void *a, const void *b)
+{
 	/* TODO: ordenar decrescentemente por fitness */
 	const Individual *ia = (const Individual*)a;
 	const Individual *ib = (const Individual*)b;
+
+	if(ia < ib)
+	{
+
+	}
+
 	(void)ia;
 	(void)ib;
 	return 0; /* provisorio */
 }
 
-void copy_individual(const Individual *src, Individual *dst) {
+void copy_individual(const Individual *src, Individual *dst)
+{
 	/* TODO: copiar todos os genes e o fitness */
 	(void)src;
 	(void)dst;
 }
 
-int tournament_select(Individual pop[], int pop_size) {
+int tournament_select(Individual pop[], int pop_size)
+{
 	/* TODO:
 	   - sorteie TOURNAMENT_K indices em [0, pop_size-1]
 	   - retorne o indice do individuo com maior fitness */
@@ -128,8 +126,8 @@ int tournament_select(Individual pop[], int pop_size) {
 	return 0; /* provisorio */
 }
 
-void one_point_crossover(const Individual *p1, const Individual *p2,
-                         Individual *c1, Individual *c2) {
+void one_point_crossover(const Individual *p1, const Individual *p2,Individual *c1, Individual *c2)
+{
 	/* TODO:
 	   - Com prob. CROSS_RATE: escolher um corte em [1, N-1),
 	     combinar prefixo de p1 com sufixo de p2 (c1) e o inverso (c2)
@@ -140,13 +138,15 @@ void one_point_crossover(const Individual *p1, const Individual *p2,
 	(void)c2;
 }
 
-void mutate(Individual *ind) {
+void mutate(Individual *ind)
+{
 	/* TODO: para cada gene i, com prob. MUT_RATE,
 	   sorteie nova coluna em [0, N-1] */
 	(void)ind;
 }
 
-void print_board_ascii(const Individual *ind) {
+void print_board_ascii(const Individual *ind)
+{
 	for (int i = 0; i < N; ++i) {
 		for (int j = 0; j < N; ++j) {
 			if (ind->gene[i] == j) printf("Q ");
@@ -157,7 +157,8 @@ void print_board_ascii(const Individual *ind) {
 }
 
 /* --------------------------- main ------------------------------- */
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 	/* Seed: tempo ou valor fixo informado na linha de comando */
 	if (argc >= 2) {
 		unsigned int seed = (unsigned int)strtoul(argv[1], NULL, 10);
