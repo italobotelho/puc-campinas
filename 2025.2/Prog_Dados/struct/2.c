@@ -51,28 +51,48 @@ float media_salarial_func(Funcionario f[])
     return media;
 }
 
-int func_maior_dependentes(Funcionario f[])
+int matric_func_maior_dependentes(Funcionario f[])
 {
     int maior_dep = f[1].dependentes;
+    int matricula_func = f[1].matricula;
     for(int i=2; i<=tam; i++)
     {
         if(maior_dep < f[i].dependentes)
         {
             maior_dep = f[i].dependentes;
-            // continuar daqui
+            matricula_func = f[i].matricula;
         }
     }
+
+    return matricula_func;
+}
+
+void matric_cod_func_maior_dep(Funcionario f[], int *matricula, int *cargo)
+{
+    int pos = 1;
+
+    for(int i=2; i<=tam; i++)
+    {
+        if(f[pos].dependentes < f[i].dependentes)
+        {
+            pos = i;
+        }
+    }
+
+    *matricula = f[pos].matricula;
+    *cargo = f[pos].cargo;
 }
 
 float media_salarial_func_cargo(Funcionario f[])
 {
-
+    //
 }
 
 int main()
 {
     Funcionario func[tam];
     float media_salarial_total = 0;
+    int matric_func, cargo_func;
 
     le_info_func(func);
 
@@ -80,7 +100,13 @@ int main()
 
     media_salarial_total = media_salarial_func(func);
 
+    matric_func = matric_func_maior_dependentes(func);
 
+    matric_cod_func_maior_dep(func, &matric_func, &cargo_func);
+
+    printf("Funcionario com mais dependentes:\n");
+    printf("Matricula: %d\n", matric_func);
+    printf("Codigo do cargo: %d\n", cargo_func);
 
     return 0;
 }
