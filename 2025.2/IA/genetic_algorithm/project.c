@@ -95,35 +95,46 @@ int evaluate(Individual *ind)
 
 int cmp_desc_fitness(const void *a, const void *b)
 {
-	/* TODO: ordenar decrescentemente por fitness */
 	const Individual *ia = (const Individual*)a;
 	const Individual *ib = (const Individual*)b;
 
-	if(ia < ib)
-	{
-
-	}
-
 	(void)ia;
 	(void)ib;
-	return 0; /* provisorio */
+	return ib->fitness - ia->fitness;
 }
 
 void copy_individual(const Individual *src, Individual *dst)
 {
-	/* TODO: copiar todos os genes e o fitness */
+	for(i = 0; i < N; i++)
+	{
+	    dst->gene[i] = src->gene[i];
+	}
+	
+	dst->fitness = src->fitness;
+	
 	(void)src;
 	(void)dst;
 }
 
 int tournament_select(Individual pop[], int pop_size)
 {
-	/* TODO:
-	   - sorteie TOURNAMENT_K indices em [0, pop_size-1]
-	   - retorne o indice do individuo com maior fitness */
+	int melhor_indice = rand_int(0, TOURNAMENT_K);
+	int fitness_melhor = pop[melhor_indice]->fitness;
+    
+    for(int i = 0; i < TOURNAMENT_K; i++)
+    {
+        novo_indice = rand_int(0, TOURNAMENT_K);
+        novo_fitness = pop[novo_indice]->fitness;
+        
+        if(novo_fitness > fitness_melhor)
+        {
+            melhor_indice = novo_fitness;
+        }
+    }
+    
 	(void)pop;
 	(void)pop_size;
-	return 0; /* provisorio */
+	return melhor_indice;
 }
 
 void one_point_crossover(const Individual *p1, const Individual *p2,Individual *c1, Individual *c2)
