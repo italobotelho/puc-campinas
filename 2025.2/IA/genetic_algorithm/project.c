@@ -119,12 +119,13 @@ void copy_individual(const Individual *src, Individual *dst)
 int tournament_select(Individual pop[], int pop_size)
 {
 	int melhor_indice = rand_int(0, TOURNAMENT_K);
-	int fitness_melhor = pop[melhor_indice]->fitness;
-    
+	int fitness_melhor = pop[melhor_indice].fitness;
+	int novo_indice = 0, novo_fitness = 0;
+	
     for(int i = 0; i < TOURNAMENT_K; i++)
     {
         novo_indice = rand_int(0, TOURNAMENT_K);
-        novo_fitness = pop[novo_indice]->fitness;
+        novo_fitness = pop[novo_indice].fitness;
         
         if(novo_fitness > fitness_melhor)
         {
