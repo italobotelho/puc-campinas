@@ -16,13 +16,13 @@
 #include <math.h>
 
 /* ---------------- Parametros do problema e do GA ---------------- */
-#define N               4           /* tamanho do tabuleiro */
+#define N               4          /* tamanho do tabuleiro */
 #define POP_SIZE        100         /* tamanho da populacao */
 #define MAX_GEN         1000        /* max. geracoes */
 #define CROSS_RATE      0.80f       /* taxa de crossover */
-#define MUT_RATE        0.10f       /* taxa de mutacao por gene */
-#define ELITE_COUNT     2           /* nB: de elites preservados */
-#define TOURNAMENT_K    3           /* tamanho do torneio */
+#define MUT_RATE        0.05f       /* taxa de mutacao por gene */
+#define ELITE_COUNT     3           /* nB: de elites preservados */
+#define TOURNAMENT_K    5           /* tamanho do torneio */
 
 /* ---------------- Representacao de individuo -------------------- */
 typedef struct {
@@ -105,7 +105,7 @@ int cmp_desc_fitness(const void *a, const void *b)
 
 void copy_individual(const Individual *src, Individual *dst)
 {
-	for(i = 0; i < N; i++)
+	for(int i = 0; i < N; i++)
 	{
 	    dst->gene[i] = src->gene[i];
 	}
@@ -138,12 +138,31 @@ int tournament_select(Individual pop[], int pop_size)
 	return melhor_indice;
 }
 
-void one_point_crossover(const Individual *p1, const Individual *p2,Individual *c1, Individual *c2)
+void one_point_crossover(const Individual *p1, const Individual *p2, Individual *c1, Individual *c2)
 {
-	/* TODO:
-	   - Com prob. CROSS_RATE: escolher um corte em [1, N-1),
-	     combinar prefixo de p1 com sufixo de p2 (c1) e o inverso (c2)
-	   - Caso contrario: apenas copiar p1->c1 e p2->c2 */
+	   if(rand_unit() > CROSS_RATE)
+	   {
+			for(int i = 0; i < N; i++)
+			{
+				c1->gene[i] = p1->gene[i];
+				c2->gene[i] = p2->gene[i];
+			}
+	   }
+	   else
+	   {
+			int corte = rand_int(0, N-1);
+			for(int i = 0; i < corte; i++)
+			{
+				c1->gene[i] = p1->gene[i];
+				c2->gene[i] = p2->gene[i];
+			}
+			for(int j = corte; j < N; j++)
+			{
+				c1->gene[j] = p2->gene[j];
+				c2->gene[j] = p1->gene[j];
+			}
+	   }
+
 	(void)p1;
 	(void)p2;
 	(void)c1;
@@ -152,8 +171,14 @@ void one_point_crossover(const Individual *p1, const Individual *p2,Individual *
 
 void mutate(Individual *ind)
 {
-	/* TODO: para cada gene i, com prob. MUT_RATE,
-	   sorteie nova coluna em [0, N-1] */
+	   for(int i = 0; i < N; i++)
+	   {
+			if(rand_unit() < MUT_RATE)
+			{
+				ind->gene[i] = rand_int(0, N-1);
+			}
+	   }
+
 	(void)ind;
 }
 
