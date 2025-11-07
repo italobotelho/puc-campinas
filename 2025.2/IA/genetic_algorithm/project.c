@@ -72,9 +72,12 @@ int compute_conflicts(const Individual *ind)
 	{
 		for(int j=0; j<N; j++)
 		{
-			if((ind->gene[i] == ind->gene[j]) || (abs(i-j) == abs(ind->gene[i] - ind->gene[j])))
+			if(i != j)
 			{
-				cont++;
+				if((ind->gene[i] == ind->gene[j]) || (abs(i-j) == abs(ind->gene[i] - ind->gene[j])))
+				{
+					cont++;
+				}
 			}
 		}
 	}
